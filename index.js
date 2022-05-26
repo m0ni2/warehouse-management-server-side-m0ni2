@@ -34,6 +34,7 @@ const run = async () => {
             const id = req.params.id;
             const delivered = parseInt(req.query.delivered);
             const reStock = parseInt(req.query.reStock);
+
             const options = { upsert: true };
             const query = { _id: ObjectId(id) };
             if (delivered) {
@@ -42,7 +43,7 @@ const run = async () => {
                 };
                 product = await productCollection.updateOne(query, updateDoc, options);
             }
-            if (reStock) {
+            else if (reStock) {
                 const updateDoc = {
                     $inc: { quantity: reStock },
                 };
@@ -53,7 +54,7 @@ const run = async () => {
             }
 
             res.send(product);
-            console.log('single product data send', delivered);
+            console.log('single product data send');
         });
 
 
