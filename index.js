@@ -28,7 +28,7 @@ const run = async () => {
             console.log('all products data send');
         });
 
-        // get single product
+        // get single product, delivery and restock
         app.get('/product/:id', async (req, res) => {
             let product;
             const id = req.params.id;
@@ -55,6 +55,15 @@ const run = async () => {
 
             res.send(product);
             console.log('single product data send');
+        });
+
+        // delete product
+        app.delete('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(query);
+            res.send(result);
+            console.log('product deleted');
         });
 
 
